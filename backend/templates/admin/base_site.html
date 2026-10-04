@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | AMDG GROUP Management{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div id="site-name" class="amdg-site-branding">
+    <a href="{% url 'admin:index' %}" class="amdg-brand-link">
+        <span class="amdg-brand-badge">A</span>
+        <span class="amdg-brand-title">
+            <strong>AMDG GROUP Ltd</strong>
+            <small>Operations & Management Portal</small>
+        </span>
+    </a>
+</div>
+{% endblock %}
+
+{% block userlinks %}
+<div class="amdg-quick-links">
+    <a href="http://127.0.0.1:5173/admin" target="_blank" class="amdg-portal-link amdg-btn-accent">⚡ React Admin App</a>
+    <a href="http://127.0.0.1:5173/" target="_blank" class="amdg-portal-link">🌐 View Live Site</a>
+</div>
+{{ block.super }}
+{% endblock %}

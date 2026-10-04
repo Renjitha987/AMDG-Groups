@@ -1,0 +1,75 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block userlinks %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="amdg-login-wrapper">
+    <div class="amdg-login-card">
+        <div class="amdg-login-header">
+            <div class="amdg-brand-badge-lg">A</div>
+            <h2>AMDG GROUP Ltd</h2>
+            <p class="amdg-subtext">Corporate Administration & Management System</p>
+            <div class="amdg-verse-pill">
+                “Commit to the Lord whatever you do, and he will establish your plans.” (Proverbs 16:3)
+            </div>
+        </div>
+
+        {% if form.errors and not form.non_field_errors %}
+        <p class="errornote">
+            {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+        </p>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="errornote">
+            {{ error }}
+        </p>
+        {% endfor %}
+        {% endif %}
+
+        <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+            <div class="form-row">
+                {{ form.username.errors }}
+                <label for="id_username" class="required">{% translate 'Username' %}</label>
+                {{ form.username }}
+            </div>
+            <div class="form-row">
+                {{ form.password.errors }}
+                <label for="id_password" class="required">{% translate 'Password' %}</label>
+                {{ form.password }}
+                <input type="hidden" name="next" value="{{ next }}">
+            </div>
+            
+            <div class="submit-row">
+                <input type="submit" value="{% translate 'Sign In to Portal' %}" class="amdg-login-submit">
+            </div>
+        </form>
+
+        <div class="amdg-login-footer">
+            <a href="http://127.0.0.1:5173/admin" class="amdg-alt-link">Switch to React Admin Dashboard →</a>
+            <br>
+            <a href="http://127.0.0.1:5173/" class="amdg-alt-link-sub">Return to Public Website</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
