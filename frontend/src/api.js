@@ -1,7 +1,17 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
 
 async function fetchFromApi(endpoint, options) {
-  // First try proxy / relative
+  // If custom VITE_API_URL is configured (e.g. deployed backend), try it first
+  if (import.meta.env.VITE_API_URL) {
+    try {
+      const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, '');
+      const res = await fetch(`${baseUrl}${endpoint}`, options);
+      if (res.ok) return await res.json();
+    } catch (e) {
+      // ignore and continue
+    }
+  }
+  // Try proxy / relative
   try {
     const res = await fetch(`/api${endpoint}`, options);
     if (res.ok) return await res.json();
